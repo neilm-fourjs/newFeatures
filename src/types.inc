@@ -1,0 +1,5 @@
+PUBLIC TYPE t_myRec RECORD
+	module STRING,
+	author STRING,
+	version STRING
+	END RECORD
