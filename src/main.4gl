@@ -3,9 +3,6 @@
 IMPORT FGL lib
 IMPORT FGL lib2
 
--- include a type definition
-&include "types.inc"
-
 -- define a constant value
 CONSTANT VER=1.0
 CONSTANT AUTH="Neil J Martin"
@@ -17,21 +14,19 @@ DEFINE m_lib2 lib2.t_myLib1
 MAIN
 -- an example of a dynamic array and of variable initialization in the define.
 	DEFINE l_nums DYNAMIC ARRAY OF DECIMAL(12,2) = [ 9.95, 8.50, 12.98 ]
-	DEFINE l_myCallBackFunc FUNCTION()
-	DEFINE x SMALLINT
+	DEFINE l_arr_cnt SMALLINT = 3
+	DEFINE l_myCallBackFunc FUNCTION() -- used for the callback example
 
--- setup this modules version info
-	CALL lib.registerModule(__FILE__,AUTH,VER)
+	CALL lib.registerModule(__FILE__,AUTH,VER) -- setup this modules version info
 	CALL m_lib.initModule() -- Initialize the library.
 	CALL m_lib2.initModule('{ "opt1": 1}') -- Initialize the library using a JSON string
 	CALL lib.showModules() -- Show the modules and the versions used.
--- simple string demo
-	CALL lib.sayHello( l_whom: "Neil" )
+
+	CALL lib.sayHello( l_whom: "Neil" ) -- simple string demo
 
 -- Add some more number to the array
-	LET x = l_nums.getLength()
-	LET l_nums[ x := x + 1 ] = 4.99
-	LET l_nums[ x := x + 1 ] = 7.65
+	LET l_nums[ l_arr_cnt := l_arr_cnt + 1 ] = 4.99
+	LET l_nums[ l_arr_cnt := l_arr_cnt + 1 ] = 7.65
 -- call a function passing a dynamic array
 	CALL lib.showValues(l_nums)
 
